@@ -13,7 +13,6 @@ class Maintenance extends Model
         'completed_date',
         'status',
         'notes',
-        'completed_date',
     ];
 
     protected $casts = [

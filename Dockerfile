@@ -10,8 +10,12 @@ RUN apt-get update && apt-get install -y \
     libonig-dev \ 
     libxml2-dev \ 
     libpng-dev \ 
+    libjpeg62-turbo-dev \ 
+    libfreetype6-dev \ 
+    libsqlite3-dev \ 
     zip \ 
-    && docker-php-ext-install pdo pdo_mysql pdo_pgsql zip mbstring xml \ 
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \ 
+    && docker-php-ext-install pdo pdo_mysql pdo_pgsql pdo_sqlite zip mbstring xml gd \ 
     && apt-get clean \ 
     && rm -rf /var/lib/apt/lists/* 
  
@@ -57,7 +61,7 @@ storage/framework/views bootstrap/cache public/uploads \
 && chown -R www-data:www-data storage bootstrap/cache public/uploads \ 
 && chmod -R 775 storage bootstrap/cache public/uploads 
 # (Optional) Run migrations 
-RUN php artisan migrate --force || true 
+RUN php artisan migrate --force && php artisan db:seed --class=AdminSeeder --force || true 
 # Expose port 
 EXPOSE 10000 
 # Start Apache 

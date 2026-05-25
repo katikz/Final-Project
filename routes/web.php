@@ -8,10 +8,6 @@ use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\ReportsController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/',function () {
-    return redirect()->route('login');
-});
-// ── Root redirect ──────────────────────────────────────
 Route::get('/', fn() => redirect()->route('login'));
 
 // ── Guest-only Auth routes ─────────────────────────────
